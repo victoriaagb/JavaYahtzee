@@ -1,23 +1,30 @@
 package game;
 
+import java.util.Random;
+
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
 public class Die {
-	int  weight;
+	int  value = 6;
+	boolean locked = false;
 	
 	public Die(JPanel mainPanel){
-		JButton piece = new JButton("");
-		mainPanel.add(piece);
+		
 	}
 	
-	int currentNumber(){
-		return weight;
+	void changeLock(){
+		locked = !locked;
 	}
 	
-	void setNumber(int amount){
-		weight = amount;
+	int roll(){
+		Random rng = new Random();
+		int newNum = rng.nextInt();
+		
+		
+		
+		return newNum;
+		
 	}
-	
 	
 }

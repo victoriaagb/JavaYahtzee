@@ -22,8 +22,14 @@ public class PlayGround {
 	public PlayGround(){
 		window = new JFrame(); 
 		mainPanel = new JPanel(new GridLayout(10,20));
-		//mainPanel.setPreferredSize(new Dimension(200,100));
+		mainPanel.setPreferredSize(new Dimension(400, 350));
 		rollDice = new JButton("Roll Dice");
+		rollDice.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
 		
 		dieOne = new Die(mainPanel);
 		dieTwo = new Die(mainPanel);
@@ -34,7 +40,6 @@ public class PlayGround {
 		// configure GUI components
 		window.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
-	
 		mainPanel.add(rollDice);
 		window.add(mainPanel);
 	
