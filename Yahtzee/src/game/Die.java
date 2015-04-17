@@ -1,7 +1,10 @@
 package game;
 
+import java.awt.Dimension;
 import java.awt.Image;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 
 import javax.imageio.ImageIO;
@@ -11,61 +14,65 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 
 public class Die extends JButton{
-	int  value = 6;
+	private int  value = 6;
 	boolean locked = false;
 	
 	public Die(){
-		setImage();
+		this.setSelected(true);
+	    this.setBorderPainted(true); 
+	    this.setContentAreaFilled(false); 
+	    this.setFocusPainted(false); 
+	    this.setOpaque(false);
+		this.setValue(value);
+		
 	}
 	
 	public void changeLock(){
 		// flips whether this die is locked 
 		locked = !locked;
+		this.setSelected(locked);
+		if (locked){
+			this.setInactive();
+		}
+		else{
+			this.setImage();
+		}
+		
 	}
 	
-	public void  roll(){
-		// selects random number
-		Random rng = new Random();
-		this.value = rng.nextInt();
-		setImage();
+	int getValue(){
+		return value;
 	}
 	
-	public void setImage(){
+	void setValue(int amount){
+		value = amount;
+		this.setImage();
+	}
+	
+	
+	private void setInactive(){
 		
-		this.setIcon(new ImageIcon("/images/one.png"));
+		List<String> diceImages = Arrays.asList("Dice/one.png", "Dice/two.png", "Dice/three.png", "Dice/four.png", "Dice/five.png", "Dice/six.png");
+		this.setIcon(new ImageIcon(diceImages.get(value-1)));
 		
-		/*switch(value){
-			case 1: 
-				try{
-					Image img = ImageIO.read(getClass().getResource("images/one.png"));
-					this.setIcon(new ImageIcon(img));
-				} catch(IOException ex){}
-			case 2:
-				try{
-					Image img = ImageIO.read(getClass().getResource("images/two.png"));
-					this.setIcon(new ImageIcon(img));
-				} catch(IOException ex){}
-			case 3:
-				try{
-					Image img = ImageIO.read(getClass().getResource("images/three.png"));
-					this.setIcon(new ImageIcon(img));
-				} catch(IOException ex){}
-			case 4:
-				try{
-					Image img = ImageIO.read(getClass().getResource("images/four.png"));
-					this.setIcon(new ImageIcon(img));
-				} catch(IOException ex){}
-			case 5:
-				try{
-					Image img = ImageIO.read(getClass().getResource("images/five.png"));
-					this.setIcon(new ImageIcon(img));
-				} catch(IOException ex){}
-			case 6:
-				try{
-					Image img = ImageIO.read(getClass().getResource("images/six .png"));
-					this.setIcon(new ImageIcon(img));
-				} catch(IOException ex){}
-		}*/
+	}
+	
+	private void setImage(){
+		
+		List<String> diceInactive = Arrays.asList("Dice/die1.png", "Dice/die2.png", "Dice/die3.png", "Dice/die4.png", "Dice/die5.png", "Dice/die6.png");
+		this.setIcon(new ImageIcon(diceInactive.get(value-1)));
+	}
+	
+	void rollDie(){
+		if(!locked){
+			setValue(getRandom());
+		}
+	}
+	
+	private int getRandom(){
+		Random rand = new Random();
+		int n = rand.nextInt(6) + 1;
+		return n;
 	}
 	
 }

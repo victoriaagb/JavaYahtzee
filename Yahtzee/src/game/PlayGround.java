@@ -18,11 +18,7 @@ public class PlayGround {
 	private final JPanel scorePanel;
 	private final JPanel dicePanel;
 	private final JButton rollDice;
-	private Die dieOne;
-	private Die dieTwo;
-	private Die dieThree;
-	private Die dieFour;
-	private Die dieFive;
+
 	
 	public PlayGround(){
 		
@@ -33,31 +29,40 @@ public class PlayGround {
 		scorePanel = new JPanel();
 		scorePanel.add(new ScoreBoard());
 		
-		dieOne = new Die();
-		dieTwo = new Die();
-		dieThree = new Die();
-		dieFour = new Die();
-		dieFive = new Die();
+		final Die[] dices = new Die[5];
+		
 		rollDice = new JButton("Roll Dice");
 		rollDice.addActionListener(new ActionListener(){
 
 			@Override
-			public void actionPerformed(ActionEvent ae) {
-				// TODO Auto-generated method stub
-				
-			}
-		});
+			public void actionPerformed(ActionEvent a) {
+				for (Die i : dices){
+					i.rollDie();
+				}
+
+			}});
 		
 		dicePanel = new JPanel(new GridLayout(5, 2));
-		dicePanel.add(dieOne);
-		dicePanel.add(dieTwo);
-		dicePanel.add(dieThree);
-		dicePanel.add(dieFour);
-		dicePanel.add(dieFive);
-		dicePanel.add(rollDice);
+		
+		for (Die i : dices) {
+			i = new Die();
+			final Die die = i;
+			i.addActionListener(new ActionListener() {
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					die.changeLock();
+					
+				}
+				
+			});
+			
+			dicePanel.add(i);
+		}
 		
 		mainPanel.add(dicePanel);
 		mainPanel.add(scorePanel);
+		mainPanel.add(rollDice);
 		
 		// configure GUI components
 		window.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
