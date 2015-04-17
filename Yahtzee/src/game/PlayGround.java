@@ -1,7 +1,10 @@
 package game;
 
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -12,6 +15,8 @@ import javax.swing.WindowConstants;
 public class PlayGround {
 	private final JFrame window;
 	private final JPanel mainPanel;
+	private final JPanel scorePanel;
+	private final JPanel dicePanel;
 	private final JButton rollDice;
 	private Die dieOne;
 	private Die dieTwo;
@@ -20,27 +25,42 @@ public class PlayGround {
 	private Die dieFive;
 	
 	public PlayGround(){
+		
 		window = new JFrame(); 
-		mainPanel = new JPanel(new GridLayout(10,20));
+		mainPanel = new JPanel(new GridLayout(0,2));
 		mainPanel.setPreferredSize(new Dimension(400, 350));
+		
+		scorePanel = new JPanel();
+		scorePanel.add(new ScoreBoard());
+		
+		dieOne = new Die();
+		dieTwo = new Die();
+		dieThree = new Die();
+		dieFour = new Die();
+		dieFive = new Die();
 		rollDice = new JButton("Roll Dice");
 		rollDice.addActionListener(new ActionListener(){
+
 			@Override
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(ActionEvent ae) {
+				// TODO Auto-generated method stub
 				
 			}
 		});
 		
-		dieOne = new Die(mainPanel);
-		dieTwo = new Die(mainPanel);
-		dieThree = new Die(mainPanel);
-		dieFour = new Die(mainPanel);
-		dieFive = new Die(mainPanel);
+		dicePanel = new JPanel(new GridLayout(5, 2));
+		dicePanel.add(dieOne);
+		dicePanel.add(dieTwo);
+		dicePanel.add(dieThree);
+		dicePanel.add(dieFour);
+		dicePanel.add(dieFive);
+		dicePanel.add(rollDice);
+		
+		mainPanel.add(dicePanel);
+		mainPanel.add(scorePanel);
 		
 		// configure GUI components
 		window.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-
-		mainPanel.add(rollDice);
 		window.add(mainPanel);
 	
 		//make GUI visible
