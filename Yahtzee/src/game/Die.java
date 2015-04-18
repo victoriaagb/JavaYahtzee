@@ -14,7 +14,7 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 
 public class Die extends JButton{
-	private int  value = 6;
+	private int  value;
 	boolean locked = false;
 	
 	public Die(){

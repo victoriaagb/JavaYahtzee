@@ -18,10 +18,12 @@ public class PlayGround {
 	private final JPanel scorePanel;
 	private final JPanel dicePanel;
 	private final JButton rollDice;
-
+	private final Die[] dices;
+	private int clicked;
 	
 	public PlayGround(){
 		
+		clicked = 0;
 		window = new JFrame(); 
 		mainPanel = new JPanel(new GridLayout(0,2));
 		mainPanel.setPreferredSize(new Dimension(400, 350));
@@ -31,7 +33,7 @@ public class PlayGround {
 		
 		dicePanel = new JPanel(new GridLayout(5, 2));
 		
-		final Die[] dices = new Die[5];
+		dices = new Die[5];
 		dices[0] = new Die();
 		dices[1] = new Die();
 		dices[2] = new Die();
@@ -39,20 +41,27 @@ public class PlayGround {
 		dices[4] = new Die();
 		
 		
+		
 		rollDice = new JButton("Roll Dice");
 		for (Die i : dices){
 			final Die die = i;
 			
 			rollDice.addActionListener(new ActionListener(){
-			
+		
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					die.setEnabled(true);
 					die.rollDie();
+					if (dices[0] == die){
+						clicked++;
+						if (clicked % 3 == 0){
+							rollDice.setEnabled(false);
+						}
+					}
 				}
-			
+				
 			});
-	
+				
 				dicePanel.add(i);
 		}
 	
@@ -84,7 +93,5 @@ public class PlayGround {
 		window.pack();
 		window.setVisible(true);
 	}
-	
-	
 	
 }
