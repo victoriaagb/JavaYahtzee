@@ -19,11 +19,12 @@ public class Die extends JButton{
 	
 	public Die(){
 		this.setSelected(true);
-	    this.setBorderPainted(true); 
+	    this.setBorderPainted(false); 
 	    this.setContentAreaFilled(false); 
 	    this.setFocusPainted(false); 
 	    this.setOpaque(false);
-		this.setValue(value);
+		this.setValue(6);
+		this.setEnabled(false);
 		
 	}
 	
