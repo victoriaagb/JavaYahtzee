@@ -1,8 +1,11 @@
 package game;
 
-import javax.swing.JPanel;
+import javax.swing.JTable;
 
-public class ScoreBoard extends JPanel {
-
+public class ScoreBoard extends JTable {
+	
+	public ScoreBoard(){
+		
+	}
 	
 }
