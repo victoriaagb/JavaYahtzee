@@ -26,9 +26,9 @@ public class Die extends JButton{
 	boolean locked = false;
 	// list of available images
 	private List<String> diceImages = Arrays.asList(
-			"Dice/one.png", "Dice/two.png", "Dice/three.png", "Dice/four.png", "Dice/five.png", "Dice/six.png");
+			"/one.png", "/two.png", "/three.png", "/four.png", "/five.png", "/six.png");
 	private List<String> diceInactive = Arrays.asList(
-			"Dice/die1.png", "Dice/die2.png", "Dice/die3.png", "Dice/die4.png", "Dice/die5.png", "Dice/die6.png");
+			"/die1.png", "/die2.png", "/die3.png", "/die4.png", "/die5.png", "/die6.png");
 	
 	/** 
 	* @constructor 
@@ -80,13 +80,13 @@ public class Die extends JButton{
 	/** changes the icon of the die to deactivated version
      */
 	private void setInactive(){
-		this.setIcon(new ImageIcon(diceImages.get(value-1)));	
+		this.setIcon(new ImageIcon(getClass().getResource(diceImages.get(value-1))));	
 	}
 	
 	/** changes the icon of the die to activated version
      */
 	private void setImage(){	
-		this.setIcon(new ImageIcon(diceInactive.get(value-1)));
+		this.setIcon(new ImageIcon(getClass().getResource(diceInactive.get(value-1))));
 	}
 	
 	/** changes value of die to a random number
