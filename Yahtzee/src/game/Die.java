@@ -31,7 +31,7 @@ public class Die extends JButton{
 			"/die1.png", "/die2.png", "/die3.png", "/die4.png", "/die5.png", "/die6.png");
 	
 	/** 
-	* @constructor 
+	* constructor 
 	*/
 	public Die(){
 		//create die
