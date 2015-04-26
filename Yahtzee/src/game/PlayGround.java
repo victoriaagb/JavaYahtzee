@@ -25,8 +25,9 @@ public class PlayGround {
 	private final JComboBox selectType;
 	String[] types = {"", "Ones", "Twos", "Threes", "Fours", "Fives", "Sixes",
 			"3 of a kind", "4 of a kind", "Full House", "Small Straight", "Large Straight", "Yahtzee", "Chance"};
+	private final int[] cases;
+	
 	private final JButton saveScore;
-
 	private final JLabel topScore = new JLabel("Top Score");
 	private final JLabel displayTopScore = new JLabel("0");
 	private final JLabel bottomScore = new JLabel("Bottom Score");
@@ -37,12 +38,15 @@ public class PlayGround {
 	private final JLabel displayTotalScore = new JLabel("0"); 
 	
 	private final ScoreBoard sb = new ScoreBoard();
-	private final Die[] dices;
 	private int clicked;
+	private int selections;
 	
 	public PlayGround(){
 		
 		clicked = 0;
+		selections = 0;
+		cases = new int[14];
+		cases[0]++;
 		window = new JFrame(); 
 		mainPanel = new JPanel(new GridLayout(0,2));
 		mainPanel.setPreferredSize(new Dimension(700, 700));
@@ -64,15 +68,7 @@ public class PlayGround {
 		dice[2] = new Die();
 		dice[3] = new Die();
 		dice[4] = new Die();
-		dices = new Die[5];
-		dices[0] = new Die();
-		dices[1] = new Die();
-		dices[2] = new Die();
-		dices[3] = new Die();
-		dices[4] = new Die();
-		
-		
-		
+
 		rollDice = new JButton("Roll Dice");
 		for (Die i : dice){
 			final Die die = i;
@@ -83,8 +79,10 @@ public class PlayGround {
 				public void actionPerformed(ActionEvent e) {
 					die.setEnabled(true);
 					die.rollDie();
-					if (dices[0] == die){
+					
+					if (dice[0] == die){
 						clicked++;
+						
 						if (clicked % 3 == 0){
 							rollDice.setEnabled(false);
 						}
@@ -118,62 +116,99 @@ public class PlayGround {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				int score;
-				switch(selectType.getSelectedIndex()){
-				case 1: 
-					score = sb.count(1, dice);
-					sb.setScore(0, score);
-					break;
-				case 2:
-					score = sb.count(2, dice);
-					sb.setScore(1, score);
-					break;
-				case 3:
-					score =sb.count(3, dice);
-					sb.setScore(2, score);
-					break;
-				case 4:
-					score = sb.count(4, dice);
-					sb.setScore(3, score);
-					break;
-				case 5:
-					score = sb.count(5, dice);
-					sb.setScore(4, score);
-					break;
-				case 6:
-					score = sb.count(6, dice);
-					sb.setScore(5, score);
-					break;
-				case 7:
-					score = sb.numberOfAKind(3, dice);
-					sb.setScore(6, score);
-					break;
-				case 8: 
-					score = sb.numberOfAKind(4, dice);
-					sb.setScore(7, score);
-					break;
-				case 9:
-					if(sb.fullHouse(dice))
-						sb.setScore(8, 25);
-					else sb.setScore(9, 0);
-					break;
-				case 10:
-					if(sb.numStraight(4, dice))
-						sb.setScore(9, 30);
-					else sb.setScore(10, 0);
-					break;
-				case 11:
-					if(sb.numStraight(5, dice))
-						sb.setScore(10, 40);
-				case 12:
-					if(sb.yahtzee(dice))
-						sb.setScore(10, 50);
-					break;
-				case 13:
-					score = sb.chance(dice);
-					sb.setScore(11, score);
-					break;
-				default: break;
-				
+				clicked = 0;
+				int selected = selectType.getSelectedIndex();
+				if(!dice[0].isEnabled()){
+					JOptionPane.showMessageDialog(window, "Please roll the dice", "Warning", JOptionPane.WARNING_MESSAGE);
+				}
+				else if(cases[selected] > 0){
+					JOptionPane.showMessageDialog(window, "Unavailable Option", "Warning", JOptionPane.WARNING_MESSAGE);
+				}
+				else{
+					
+					switch(selected){	
+					case 1: 
+						score = sb.count(1, dice);
+						sb.setScore(0, score);
+						cases[1]++;
+						break;
+					case 2:
+						score = sb.count(2, dice);
+						sb.setScore(1, score);
+						cases[2]++;
+						break;
+					case 3:
+						score =sb.count(3, dice);
+						sb.setScore(2, score);
+						cases[3]++;
+						break;
+					case 4:
+						score = sb.count(4, dice);
+						sb.setScore(3, score);
+						cases[4]++;
+						break;
+					case 5:
+						score = sb.count(5, dice);
+						sb.setScore(4, score);
+						cases[5]++;
+						break;
+					case 6:
+						score = sb.count(6, dice);
+						sb.setScore(5, score);
+						cases[6]++;
+						break;
+					case 7:
+						score = sb.numberOfAKind(3, dice);
+						sb.setScore(6, score);
+						cases[7]++;
+						break;
+					case 8: 
+						score = sb.numberOfAKind(4, dice);
+						sb.setScore(7, score);
+						cases[8]++;
+						break;
+					case 9:
+						if(sb.fullHouse(dice))
+							sb.setScore(8, 25);
+						else sb.setScore(9, 0);
+						cases[9]++;
+						break;
+					case 10:
+						if(sb.numStraight(4, dice))
+							sb.setScore(9, 30);
+						else sb.setScore(10, 0);
+						cases[10]++;
+						break;
+					case 11:
+						if(sb.numStraight(5, dice))
+							sb.setScore(10, 40);
+						cases[11]++;
+						break;
+					case 12:
+						if(sb.yahtzee(dice))
+							sb.setScore(10, 50);
+						cases[12]++;
+						break;
+					case 13:
+						score = sb.chance(dice);
+						sb.setScore(11, score);
+						cases[13]++;
+						break;
+					default: break;
+
+					}
+					rollDice.setEnabled(true);
+					selections++;
+					System.out.println(selections);
+					for(Die i : dice){
+						i.setEnabled(false);
+						i.setValue(6);
+					}
+				}
+				if(selections >= 13){
+					JOptionPane.showMessageDialog(window, "Game Over. Total score: "+ sb.grandTotal() , "Game Over", JOptionPane.INFORMATION_MESSAGE);
+					PlayGame.main(null);
+					window.setVisible(false);
 				}
 				
 				displayTopScore.setText(Integer.toString(sb.totaltopScore()));
