@@ -14,19 +14,20 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
+/** GUI of an interactive game of Yahtzee 
+* 
+* @class PlayGround.java
+* @authors Victoria Garcia, Brian Rosfelder
+* @date 04/26/2015
+* 
+*/
 public class PlayGround {
-	private final JFrame window;
-	
+	private final JFrame window;	
 	private final JPanel mainPanel;
 	private final JPanel scorePanel;
 	private final JPanel dicePanel;
-	
 	private final JButton rollDice;
 	private final JComboBox selectType;
-	String[] types = {"", "Ones", "Twos", "Threes", "Fours", "Fives", "Sixes",
-			"3 of a kind", "4 of a kind", "Full House", "Small Straight", "Large Straight", "Yahtzee", "Chance"};
-	private final int[] cases;
-	
 	private final JButton saveScore;
 	private final JLabel topScore = new JLabel("Top Score");
 	private final JLabel displayTopScore = new JLabel("0");
@@ -36,13 +37,19 @@ public class PlayGround {
 	private final JLabel displayBonusScore = new JLabel("0");
 	private final JLabel totalScore = new JLabel("Total Score");
 	private final JLabel displayTotalScore = new JLabel("0"); 
-	
 	private final ScoreBoard sb = new ScoreBoard();
+	private final int[] cases;
 	private int clicked;
 	private int selections;
-	
+	private String[] types = {"", "Ones", "Twos", "Threes", "Fours", "Fives", "Sixes",
+			"3 of a kind", "4 of a kind", "Full House", "Small Straight", "Large Straight", "Yahtzee", "Chance"};
+
+	/** 
+	* @constructor 
+	*/
 	public PlayGround(){
 		
+		//initialize variables
 		clicked = 0;
 		selections = 0;
 		cases = new int[14];
@@ -68,7 +75,8 @@ public class PlayGround {
 		dice[2] = new Die();
 		dice[3] = new Die();
 		dice[4] = new Die();
-
+		
+		//button to roll each die to random number
 		rollDice = new JButton("Roll Dice");
 		for (Die i : dice){
 			final Die die = i;
@@ -82,7 +90,7 @@ public class PlayGround {
 					
 					if (dice[0] == die){
 						clicked++;
-						
+						//three opportunities before saving score
 						if (clicked % 3 == 0){
 							rollDice.setEnabled(false);
 						}
@@ -90,10 +98,11 @@ public class PlayGround {
 				}
 				
 			});
-				
+				//die image
 				dicePanel.add(i);
 		}
 	
+		//change each die selected/unselected
 		for (Die i : dice) {
 			final Die die = i;
 			i.addActionListener(new ActionListener() {
@@ -101,7 +110,6 @@ public class PlayGround {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					die.changeLock();
-					
 				}
 				
 			});
@@ -118,12 +126,15 @@ public class PlayGround {
 				int score;
 				clicked = 0;
 				int selected = selectType.getSelectedIndex();
+				//dice are not enabled for use
 				if(!dice[0].isEnabled()){
 					JOptionPane.showMessageDialog(window, "Please roll the dice", "Warning", JOptionPane.WARNING_MESSAGE);
 				}
+				//case has already been selected before
 				else if(cases[selected] > 0){
 					JOptionPane.showMessageDialog(window, "Unavailable Option", "Warning", JOptionPane.WARNING_MESSAGE);
 				}
+				//Score options
 				else{
 					
 					switch(selected){	
@@ -197,14 +208,17 @@ public class PlayGround {
 					default: break;
 
 					}
+					//rollDice reset
 					rollDice.setEnabled(true);
 					selections++;
-					System.out.println(selections);
+					//Dice reset
 					for(Die i : dice){
 						i.setEnabled(false);
 						i.setValue(6);
 					}
 				}
+				
+				//no more selections available
 				if(selections >= 13){
 					JOptionPane.showMessageDialog(window, "Game Over. Total score: "+ sb.grandTotal() , "Game Over", JOptionPane.INFORMATION_MESSAGE);
 					PlayGame.main(null);
@@ -223,7 +237,6 @@ public class PlayGround {
 		dicePanel.add(saveScore);
 		mainPanel.add(dicePanel);
 		mainPanel.add(scorePanel);
-		//mainPanel.add(rollDice);
 		
 		// configure GUI components
 		window.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);

@@ -1,5 +1,12 @@
 package game;
 
+/** Manages each score in a Yahtzee game
+ * 
+* @class PlayGround.java
+* @authors Victoria Garcia, Brian Rosfelder
+* @date 04/26/2015
+* 
+*/
 public class ScoreBoard {
 	
 	private int [] scores;

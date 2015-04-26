@@ -13,11 +13,28 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+/** A representation of a die in 2d space with modifiable components
+ *
+ * @class Die.java
+ * @authors Victoria Garcia, Brian Rosfelder
+ * @date 04/26/2015
+ * 
+ */
 public class Die extends JButton{
+	//initiate values
 	private int  value;
 	boolean locked = false;
+	// list of available images
+	private List<String> diceImages = Arrays.asList(
+			"Dice/one.png", "Dice/two.png", "Dice/three.png", "Dice/four.png", "Dice/five.png", "Dice/six.png");
+	private List<String> diceInactive = Arrays.asList(
+			"Dice/die1.png", "Dice/die2.png", "Dice/die3.png", "Dice/die4.png", "Dice/die5.png", "Dice/die6.png");
 	
+	/** 
+	* @constructor 
+	*/
 	public Die(){
+		//create die
 		this.setSelected(true);
 	    this.setBorderPainted(false); 
 	    this.setContentAreaFilled(false); 
@@ -28,50 +45,64 @@ public class Die extends JButton{
 		
 	}
 	
+	/** changes the availability of the die
+     */
 	public void changeLock(){
-		// flips whether this die is locked 
+		// flips to opposite 
 		locked = !locked;
 		this.setSelected(locked);
+		//deactivated image
 		if (locked){
 			this.setInactive();
 		}
+		//activated image
 		else{
 			this.setImage();
 		}
 		
 	}
 	
+	/** returns the current value of the die
+	 * @return current value of the die
+     */
 	int getValue(){
 		return value;
 	}
 	
+	/** changes the value of the die
+	 * @param new value of die
+     */
 	void setValue(int amount){
 		value = amount;
 		this.setImage();
 	}
 	
-	
+	/** changes the icon of the die to deactivated version
+     */
 	private void setInactive(){
-		
-		List<String> diceImages = Arrays.asList("Dice/one.png", "Dice/two.png", "Dice/three.png", "Dice/four.png", "Dice/five.png", "Dice/six.png");
-		this.setIcon(new ImageIcon(diceImages.get(value-1)));
-		
+		this.setIcon(new ImageIcon(diceImages.get(value-1)));	
 	}
 	
-	private void setImage(){
-		
-		List<String> diceInactive = Arrays.asList("Dice/die1.png", "Dice/die2.png", "Dice/die3.png", "Dice/die4.png", "Dice/die5.png", "Dice/die6.png");
+	/** changes the icon of the die to activated version
+     */
+	private void setImage(){	
 		this.setIcon(new ImageIcon(diceInactive.get(value-1)));
 	}
 	
+	/** changes value of die to a random number
+     */
 	void rollDie(){
 		if(!locked){
 			setValue(getRandom());
 		}
 	}
 	
+	/** returns a random number
+	 * @return random number between 1 and 6
+     */
 	private int getRandom(){
 		Random rand = new Random();
+		//generate random number
 		int n = rand.nextInt(6) + 1;
 		return n;
 	}
