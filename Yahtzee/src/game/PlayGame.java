@@ -11,6 +11,13 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
+/**  GUI to start game of Yahtzee
+ * 
+* @class PlayGround.java
+* @authors Victoria Garcia, Brian Rosfelder
+* @date 04/26/2015
+* 
+*/
 public class PlayGame {
 	
 	public static void main(String[] args){
@@ -38,6 +45,7 @@ public class PlayGame {
 		duoGame = new JButton("Play a two player game");
 		duoGame.setEnabled(false);
 		
+		//make GUI visible
 		startPanel.add(singleGame);
 		startPanel.add(duoGame);
 		mainMenu.pack(); //resizes components to make them fit
